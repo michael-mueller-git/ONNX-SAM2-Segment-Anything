@@ -26,14 +26,15 @@ def mouse_callback(event, x, y, flags, param):
     global label_id, masks
     if event == cv2.EVENT_LBUTTONDOWN:
         print(f"Left mouse button clicked at ({x}, {y})")
-        sam2.add_point((x, y), 1, label_id)
-        label_id += 1
+        sam2.add_point((x, y), is_positive=True, label_id=0)
         masks = sam2.update_mask(select_best=True)
     elif event == cv2.EVENT_RBUTTONDOWN:
         print(f"Right mouse button clicked at ({x}, {y})")
+        sam2.add_point((x, y), is_positive=False, label_id=0)
+        masks = sam2.update_mask(select_best=True)
 
 window_name = "image"
-cv2.namedWindow(window_name)
+cv2.namedWindow(window_name, cv2.WINDOW_GUI_NORMAL)
 cv2.setMouseCallback(window_name, mouse_callback)
 
 while True:
