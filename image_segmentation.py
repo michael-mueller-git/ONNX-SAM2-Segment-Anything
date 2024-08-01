@@ -1,8 +1,14 @@
 from sam2 import SAM2Image, draw_masks
 import cv2
+import os
+import platform
 import numpy as np
 from imread import imread
 
+if platform.system().lower().startswith("linux") or os.path.abspath(__file__).startswith("/nix"):
+    if os.environ.get('DISPLAY'):
+        print("Warning: Force QT_QPA_PLATFORM=xcb for better user experience")
+        os.environ['QT_QPA_PLATFORM'] = "xcb"
 
 encoder_model_path = "models/sam2_hiera_base_plus_encoder.onnx"
 decoder_model_path = "models/sam2_hiera_base_plus_decoder.onnx"
